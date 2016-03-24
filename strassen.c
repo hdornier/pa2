@@ -14,7 +14,6 @@
 
 void conventional(int d, int x[][n], int y[][n], int z[][n]) {
   int entrySum, a, b, c;
-
   for (a = 0; a < n; a++) {
     for (b=0; b < n; b++) {
       entrySum = 0;
@@ -38,8 +37,20 @@ void strassen(int n, int x[][d], int y[][n], int z[][n]) {
   int P5[n/2][n/2]; 
   int P6[n/2][n/2]; 
   int P7[n/2][n/2];
-  int m1[n/2][n/2];
-  int m2[n/2][n/2];
+  int p1m1[n/2][n/2];
+  int p1m2[n/2][n/2];
+  int p2m1[n/2][n/2];
+  int p2m2[n/2][n/2];
+  int p3m1[n/2][n/2];
+  int p3m2[n/2][n/2];
+  int p4m1[n/2][n/2];
+  int p4m2[n/2][n/2];
+  int p5m1[n/2][n/2];
+  int p5m2[n/2][n/2];
+  int p6m1[n/2][n/2];
+  int p6m2[n/2][n/2];
+  int p7m1[n/2][n/2];
+  int p7m2[n/2][n/2];
 
   if (n < 2){
     z[0][0] = x[0][0] * y[0][0];
@@ -49,69 +60,47 @@ void strassen(int n, int x[][d], int y[][n], int z[][n]) {
     // P1 = A(F-H) (P3)
     for (a=0; a < n; a++) {
       for (b=0; b < n; b++) {
-        m1[a][b] = x[a][b];
-        m2[a][b] = y[a][b + n/2] - y[a + n/2][b + n/2];
-      }
-    }
-    strassen(n/2, m1, m2, P1);
+        // P1
+        p1m1[a][b] = x[a][b];
+        p1m2[a][b] = y[a][b + n/2] - y[a + n/2][b + n/2];
 
-    // P2 = (A+B)H (P5)
-    for (a=0; a < n; a++) {
-      for (b=0; b < n; b++) {
-        m1[a][b] = x[a][b] + x[a][b + n/2];
-        m2[a][b] = y[a + n/2][b + n/2];
+        // P2
+        p2m1[a][b] = x[a][b] + x[a][b + n/2];
+        p2m2[a][b] = y[a + n/2][b + n/2];
+
+        // P3
+        p3m1[a][b] = x[a + n/2][b] + x[a + n/2][b + n/2];
+        p3m2[a][b] = y[a][b];
+
+        // P4
+        p4m1[a][b] = x[a + n/2][b + n/2];
+        p4m2[a][b] = y[a + n/2][b] - y[a][b];
+
+        // P5
+        p5m1[a][b] = x[a][b] + x[a + n/2][b + n/2];
+        p5m2[a][b] = y[a][b] + y[a + n/2][b + n/2];
+
+        // P6
+        p6m1[a][b] = x[a][b + n/2] - x[a + n/2][b + n/2];
+        p6m2[a][b] = y[a + n/2][b] + y[a + n/2][b + n/2];
+
+        // P7
+        p7m1[a][b] = x[a][b] - x[a + n/2][b];
+        p7m2[a][b] = y[a][b] + y[a][b + n/2];
       }
     }
+
+    strassen(n/2, m1, m2, P1);
 
     strassen(n/2, m1, m2, P2);
 
-    // P3 = (C+D)E (P2)
-    for (a=0; a < n; a++) {
-      for (b=0; b < n; b++) {
-        m1[a][b] = x[a + n/2][b] + x[a + n/2][b + n/2];
-        m2[a][b] = y[a][b];
-      }
-    }
-
     strassen(n/2, m1, m2, P3);
-
-    // P4 = D(G - E) (P4)
-    for (a=0; a < n; a++) {
-      for (b=0; b < n; b++) {
-        m1[a][b] = x[a + n/2][b + n/2];
-        m2[a][b] = y[a + n/2][b] - y[a][b];
-      }
-    }
 
     strassen(n/2, m1, m2, P4);
 
-    // P5 = (A+D)(E+H) (P1)
-    for (a=0; a < n; a++) {
-      for (b=0; b < n; b++) {
-        m1[a][b] = x[a][b] + x[a + n/2][b + n/2];
-        m2[a][b] = y[a][b] + y[a + n/2][b + n/2];
-      }
-    }
-
     strassen(n/2, m1, m2, P5);
 
-    // P6 = (B-D)(G+H) (P7)
-    for (a=0; a < n; a++) {
-      for (b=0; b < n; b++) {
-        m1[a][b] = x[a][b + n/2] - x[a + n/2][b + n/2];
-        m2[a][b] = y[a + n/2][b] + y[a + n/2][b + n/2];
-      }
-    }
-
     strassen(n/2, m1, m2, P6);
-
-    // P7 = (A-C)(E+F) (P6)
-    for (a=0; a < n; a++) {
-      for (b=0; b < n; b++) {
-        m1[a][b] = x[a][b] - x[a + n/2][b];
-        m2[a][b] = y[a][b] + y[a][b + n/2];
-      }
-    }
 
     strassen(n/2, m1, m2, P7);
 
@@ -160,6 +149,22 @@ main(int argc, char *argv[]) {
   }
 
   fclose(fp);
+
+  c = 0;
+  // put real values into matrix
+  for (int a = 0; a < dimensionOld; a++) {
+    for (int b = 0; b < dimensionOld; b++) {
+      m1[a][b] = values[c];
+      c++;
+    }
+  }
+
+  // put padding values into matrix
+  for (int a = dimensionOld; a < dimension; a++) {
+    for (int b = dimensionOld; b < dimension; b++){
+      m1[a][b] = 0;
+    }
+  }
 
 
  
