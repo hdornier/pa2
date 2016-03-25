@@ -20,17 +20,17 @@ int main(int argc, char *argv[]) {
    srand ( time(NULL) );
 
    if (type == 1) {
-      for (int i = 0; i < dimension*4; i++) {
+      for (int i = 0; i < dimension*dimension*2; i++) {
          fprintf(f, "%d\n", rand() % 2);
       }
    }
    else if (type == 2) {
-      for (int i = 0; i < dimension*4; i++) {
+      for (int i = 0; i < dimension*dimension*2; i++) {
          fprintf(f, "%d\n", rand() % 3);
       }
    }
    else if (type == 3) {
-      for (int i = 0; i < dimension*4; i++) {
+      for (int i = 0; i < dimension*dimension*2; i++) {
          fprintf(f, "%d\n", rand() % 32);
       }
    }
