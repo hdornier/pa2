@@ -16,19 +16,6 @@ int main(int argc, char *argv[]) {
        printf("Error opening file!\n");
        exit(1);
    }
-
-   // for (int i = 0; i < dimension*4; i++) {
-   //    if (type == 1) {
-   //       // int r = rand() % 3;
-   //       // fprintf("%d\n", r);
-   //    }
-   //    else if (type == 2) {
-   //       fprintf("%d\n", i);
-   //    }
-   //    else {
-   //       fprintf("%d\n", i);
-   //    }
-   // }
    
    srand ( time(NULL) );
 

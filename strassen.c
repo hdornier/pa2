@@ -48,6 +48,12 @@ void printMatrix(int d, int m[][d]) {
   }
 }
 
+void printDiagonal(int d, int m[][d]) {
+  for(int a = 0; a < d; a++) {
+    printf("%d\n", m[a][a]);
+  }
+}
+
 void strassen(int n, int x[][n], int y[][n], int z[][n]) {
 
   int P1[n/2][n/2];
@@ -215,5 +221,7 @@ int main(int argc, char *argv[]) {
   int strassenOutput[dimension][dimension];
   strassen(dimension, m21, m22, strassenOutput);
   printMatrix(dimension, strassenOutput);
+
+  printDiagonal(dimensionOld, strassenOutput);
   
 }
