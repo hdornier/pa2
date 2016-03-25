@@ -33,6 +33,15 @@ int paddedValue(int n) {
 
 }
 
+void printMatrix(int d, int m[][d]) {
+  for(int a = 0; a < d; a++) {
+    for(int b = 0; b < d; b++) {
+      printf("%d ", m[a][b]);
+    }
+    printf("\n");
+  }
+}
+
 void strassen(int n, int x[][n], int y[][n], int z[][n]) {
 
   int P1[n/2][n/2];
@@ -112,8 +121,8 @@ void strassen(int n, int x[][n], int y[][n], int z[][n]) {
 
     strassen(n/2, p7m1, p7m2, P7);
 
-    for (int a=0; a < n; a++) {
-      for (int b=0; b < n; b++) {
+    for (int a=0; a < (n/2); a++) {
+      for (int b=0; b < (n/2); b++) {
         z[a][b] = P5[a][b] + P4[a][b] - P2[a][b] + P6[a][b];
         z[a][b + n/2] = P1[a][b] + P2[a][b];
         z[a + n/2][b] = P3[a][b] + P4[a][b];
@@ -123,26 +132,16 @@ void strassen(int n, int x[][n], int y[][n], int z[][n]) {
   }
 }
 
-void printMatrix(int d, int m[][d]) {
-  for(int a = 0; a < d; a++) {
-    for(int b = 0; b < d; b++) {
-      printf("%d ", m[a][b]);
-    }
-    printf("\n");
-  }
-}
-
 int main(int argc, char *argv[]) {
   if (argc != 4) {
     printf("Invalid input.");
     return -1;
   }
 
-
   int dimension = atoi(argv[2]);
   int dimensionOld = dimension;
 
-  dimension = paddedValue(dimension);
+  // dimension = paddedValue(dimension);
 
   int numValues = 2 * dimensionOld * dimensionOld;
   int values[numValues];
@@ -166,8 +165,6 @@ int main(int argc, char *argv[]) {
 
   fclose(fp);
 
-
-
   c = 0;
   // put real values into matrix
   for (int a = 0; a < dimensionOld; a++) {
@@ -180,7 +177,7 @@ int main(int argc, char *argv[]) {
   c = numValues / 2;
   for (int a = 0; a < dimensionOld; a++) {
     for (int b = 0; b < dimensionOld; b++) {
-      m1[a][b] = values[c];
+      m2[a][b] = values[c];
       c++;
     }
   }
