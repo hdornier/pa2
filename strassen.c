@@ -187,7 +187,6 @@ main(int argc, char *argv[]) {
       m2[a][b] = 0;
     }
   }
-}
 
   printMatrix(m1);
   printMatrix(m2);
