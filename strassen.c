@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 void conventional(int d, int x[][d], int y[][d], int z[][d]) {
   int entrySum, a, b, c;
@@ -208,12 +209,28 @@ int main(int argc, char *argv[]) {
   printMatrix(dimension, m21);
   printMatrix(dimension, m22);
 
+  struct timeval t1, t2;
+
   int conventionalOutput[dimensionOld][dimensionOld];
+
+  gettimeofday(&t1, NULL);
   conventional(dimensionOld, m11, m12, conventionalOutput);
+  gettimeofday(&t2, NULL);
+
   printMatrix(dimensionOld, conventionalOutput);
 
   int strassenOutput[dimension][dimension];
+
+  struct timeval t3, t4;
+
+  gettimeofday(&t3, NULL);
   strassen(dimension, m21, m22, strassenOutput);
+  gettimeofday(&t4, NULL);
+
   printMatrix(dimension, strassenOutput);
-  
+
+  printf("Conventional time (microseconds): %ld", ((t2.tv_sec - t1.tv_sec)*1000000L + t2.tv_usec) - t1.tv_usec);
+  printf("\n");
+  printf("Strassen time (microseconds): %ld", ((t4.tv_sec - t3.tv_sec)*1000000L + t4.tv_usec) - t3.tv_usec);
+  printf("\n");
 }
