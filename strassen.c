@@ -65,8 +65,8 @@ void strassen(int n, int x[][n], int y[][n], int z[][n]) {
   if (n >= 2) {
 
     // P1 = A(F-H) (P3)
-    for (int a=0; a < n; a++) {
-      for (int b=0; b < n; b++) {
+    for (int a=0; a < (n / 2); a++) {
+      for (int b=0; b < (n / 2); b++) {
 
         // P1
         p1m1[a][b] = x[a][b];
