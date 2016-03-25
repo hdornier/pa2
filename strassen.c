@@ -29,6 +29,8 @@ void conventional(int d, int x[][d], int y[][d], int z[][d]) {
 
 int paddedValue(int n) {
 
+  return 0;
+
 }
 
 void strassen(int n, int x[][n], int y[][n], int z[][n]) {
@@ -121,27 +123,28 @@ void strassen(int n, int x[][n], int y[][n], int z[][n]) {
   }
 }
 
-void printMatrix(m, d) {
+void printMatrix(int d, int m[][d]) {
   for(int a = 0; a < d; a++) {
     for(int b = 0; b < d; b++) {
-      printf("%d ", m[i][j]);
+      printf("%d ", m[a][b]);
     }
     printf("\n");
   }
 }
 
-main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
   if (argc != 4) {
     printf("Invalid input.");
     return -1;
   }
 
-  int dimension = atoi(argv[1]);
+
+  int dimension = atoi(argv[2]);
   int dimensionOld = dimension;
 
   dimension = paddedValue(dimension);
 
-  numValues = 2 * dimensionOld * dimensionOld;
+  int numValues = 2 * dimensionOld * dimensionOld;
   int values[numValues];
 
   int m1[dimension][dimension];
@@ -157,11 +160,13 @@ main(int argc, char *argv[]) {
   int entry;
   int c = 0;
   while (!feof (fp) && fscanf (fp, "%d", &entry) && c < numValues) {
-    values[i] = entry;
+    values[c] = entry;
     c++;
   }
 
   fclose(fp);
+
+
 
   c = 0;
   // put real values into matrix
@@ -188,14 +193,15 @@ main(int argc, char *argv[]) {
     }
   }
 
-  printMatrix(m1);
-  printMatrix(m2);
+  printMatrix(dimension, m1);
+  printMatrix(dimension, m2);
 
   int conventionalOutput[dimension][dimension];
   conventional(dimension, m1, m2, conventionalOutput);
-  printMatrix(conventionalResult);
+  printMatrix(dimension, conventionalOutput);
 
   int strassenOutput[dimension][dimension];
   strassen(dimension, m1, m2, strassenOutput);
-  printMatrix(strassenResult)
+  printMatrix(dimension, strassenOutput);
+  
 }

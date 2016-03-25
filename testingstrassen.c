@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 void conventional(int d, int x[][d], int y[][d], int z[][d]) {
   int entrySum, a, b, c;
 
@@ -28,6 +27,9 @@ void conventional(int d, int x[][d], int y[][d], int z[][d]) {
 
 }
 
+int paddedValue(int n) {
+
+}
 
 void strassen(int n, int x[][n], int y[][n], int z[][n]) {
 
@@ -119,42 +121,81 @@ void strassen(int n, int x[][n], int y[][n], int z[][n]) {
   }
 }
 
+void printMatrix(m, d) {
+  for(int a = 0; a < d; a++) {
+    for(int b = 0; b < d; b++) {
+      printf("%d ", m[i][j]);
+    }
+    printf("\n");
+  }
+}
 
-int main(int argc, char *argv[]) {
+main(int argc, char *argv[]) {
+  if (argc != 4) {
+    printf("Invalid input.");
+    return -1;
+  }
 
+  int dimension = atoi(argv[1]);
+  int dimensionOld = dimension;
 
-  int a[4][4] = {  
-   {0, 1, 2, 3} ,   /*  initializers for row indexed by 0 */
-   {4, 3, 8, 7} ,
-   {4, 5, 6, 1} ,   /*  initializers for row indexed by 1 */
-   {8, 9, 10, 11}   /*  initializers for row indexed by 2 */
-  };
+  dimension = paddedValue(dimension);
 
-  int b[4][4] = {  
-   {5, 5, 5, 5} ,   /*  initializers for row indexed by 0 */
-   {1, 5, 2, 9} ,
-   {1, 5, 2, 9} ,   /*  initializers for row indexed by 1 */
-   {8, 4, 0, 1}   /*  initializers for row indexed by 2 */
-  };
+  numValues = 2 * dimensionOld * dimensionOld;
+  int values[numValues];
 
-  int c[4][4] = {
-   {0, 0, 0, 0} ,   /*  initializers for row indexed by 0 */
-   {0, 0, 0, 0} ,
-   {0, 0, 0, 0} ,   /*  initializers for row indexed by 1 */
-   {0, 0, 0, 0}   /*  initializers for row indexed by 2 */
-  };
+  int m1[dimension][dimension];
+  int m2[dimension][dimension];
 
-  printf("FDsFDS");
-  //conventional(4, a, b, c);
-  strassen(4, a, b, c);
+  FILE *fp;
 
-  for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 4; j++) {
-      printf("%d\n", c[i][j]);
+  if ((fp = fopen ("matrix.txt", "r")) == NULL) {
+    printf("Could not read input data. \n");
+    return -1;
+  }
+
+  int entry;
+  int c = 0;
+  while (!feof (fp) && fscanf (fp, "%d", &entry) && c < numValues) {
+    values[i] = entry;
+    c++;
+  }
+
+  fclose(fp);
+
+  c = 0;
+  // put real values into matrix
+  for (int a = 0; a < dimensionOld; a++) {
+    for (int b = 0; b < dimensionOld; b++) {
+      m1[a][b] = values[c];
+      c++;
     }
   }
 
+  c = numValues / 2;
+  for (int a = 0; a < dimensionOld; a++) {
+    for (int b = 0; b < dimensionOld; b++) {
+      m1[a][b] = values[c];
+      c++;
+    }
+  }
 
-  return 0;
+  // put padding values into matrices
+  for (int a = dimensionOld; a < dimension; a++) {
+    for (int b = dimensionOld; b < dimension; b++){
+      m1[a][b] = 0;
+      m2[a][b] = 0;
+    }
+  }
+
+  printMatrix(m1);
+  printMatrix(m2);
+
+  int conventionalOutput[dimension][dimension];
+  conventional(dimension, m1, m2, conventionalOutput);
+  printMatrix(conventionalResult);
+
+  int strassenOutput[dimension][dimension];
+  strassen(dimension, m1, m2, strassenOutput);
+  printMatrix(strassenResult)
 }
-
