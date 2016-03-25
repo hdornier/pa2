@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 void conventional(int d, int x[][d], int y[][d], int z[][d]) {
   int entrySum, a, b, c;
 
@@ -27,9 +28,6 @@ void conventional(int d, int x[][d], int y[][d], int z[][d]) {
 
 }
 
-int paddedValue(int n) {
-
-}
 
 void strassen(int n, int x[][n], int y[][n], int z[][n]) {
 
@@ -122,38 +120,41 @@ void strassen(int n, int x[][n], int y[][n], int z[][n]) {
 }
 
 
-main(int argc, char *argv[]) {
-  if (argc != 4) {
-    printf("Invalid input.");
-    return -1;
+int main(int argc, char *argv[]) {
+
+
+  int a[4][4] = {  
+   {0, 1, 2, 3} ,   /*  initializers for row indexed by 0 */
+   {4, 3, 8, 7} ,
+   {4, 5, 6, 1} ,   /*  initializers for row indexed by 1 */
+   {8, 9, 10, 11}   /*  initializers for row indexed by 2 */
+  };
+
+  int b[4][4] = {  
+   {5, 5, 5, 5} ,   /*  initializers for row indexed by 0 */
+   {1, 5, 2, 9} ,
+   {1, 5, 2, 9} ,   /*  initializers for row indexed by 1 */
+   {8, 4, 0, 1}   /*  initializers for row indexed by 2 */
+  };
+
+  int c[4][4] = {
+   {0, 0, 0, 0} ,   /*  initializers for row indexed by 0 */
+   {0, 0, 0, 0} ,
+   {0, 0, 0, 0} ,   /*  initializers for row indexed by 1 */
+   {0, 0, 0, 0}   /*  initializers for row indexed by 2 */
+  };
+
+  printf("FDsFDS");
+  //conventional(4, a, b, c);
+  strassen(4, a, b, c);
+
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      printf("%d\n", c[i][j]);
+    }
   }
 
-  int dimension = atoi(argv[1]);
-  int dimensionOld = dimension;
 
-  dimension = paddedValue(dimension);
-
-  numValues = 2 * dimensionOld * dimensionOld;
-  int values[numValues];
-
-  int m1[dimension][dimension];
-  int m2[dimension][dimension];
-
-  FILE *fp;
-
-  if ((fp = fopen ("matrix.txt", "r")) == NULL) {
-    printf("Could not read input data. \n");
-    return -1;
-  }
-
-  int entry;
-  int c = 0;
-  while (!feof (fp) && fscanf (fp, "%d", &entry) && c < numValues) {
-    values[i] = entry;
-    c++;
-  }
-
-  fclose(fp);
-
+  return 0;
 }
 
