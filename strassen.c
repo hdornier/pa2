@@ -32,7 +32,7 @@ int paddedValue(int dimension) {
   int paddedDimension = 1;
 
   while(paddedDimension < dimension) {
-    power = power * 2;
+    paddedDimension = paddedDimension * 2;
   }
 
   return paddedDimension;
@@ -155,8 +155,10 @@ int main(int argc, char *argv[]) {
   int numValues = 2 * dimensionOld * dimensionOld;
   int values[numValues];
 
-  int m1[dimension][dimension];
-  int m2[dimension][dimension];
+  int m11[dimensionOld][dimensionOld];
+  int m12[dimensionOld][dimensionOld];
+  int m21[dimension][dimension];
+  int m22[dimension][dimension];
 
   FILE *fp;
 
@@ -178,7 +180,8 @@ int main(int argc, char *argv[]) {
   // put real values into matrix
   for (int a = 0; a < dimensionOld; a++) {
     for (int b = 0; b < dimensionOld; b++) {
-      m1[a][b] = values[c];
+      m11[a][b] = values[c];
+      m21[a][b] = values[c];
       c++;
     }
   }
@@ -186,7 +189,8 @@ int main(int argc, char *argv[]) {
   c = numValues / 2;
   for (int a = 0; a < dimensionOld; a++) {
     for (int b = 0; b < dimensionOld; b++) {
-      m2[a][b] = values[c];
+      m12[a][b] = values[c];
+      m22[a][b] = values[c];
       c++;
     }
   }
@@ -194,20 +198,22 @@ int main(int argc, char *argv[]) {
   // put padding values into matrices
   for (int a = dimensionOld; a < dimension; a++) {
     for (int b = dimensionOld; b < dimension; b++){
-      m1[a][b] = 0;
-      m2[a][b] = 0;
+      m21[a][b] = 0;
+      m22[a][b] = 0;
     }
   }
 
-  printMatrix(dimension, m1);
-  printMatrix(dimension, m2);
+  printMatrix(dimensionOld, m11);
+  printMatrix(dimensionOld, m12);
+  printMatrix(dimension, m21);
+  printMatrix(dimension, m22);
 
-  int conventionalOutput[dimension][dimension];
-  conventional(dimension, m1, m2, conventionalOutput);
-  printMatrix(dimension, conventionalOutput);
+  int conventionalOutput[dimensionOld][dimensionOld];
+  conventional(dimensionOld, m11, m12, conventionalOutput);
+  printMatrix(dimensionOld, conventionalOutput);
 
   int strassenOutput[dimension][dimension];
-  strassen(dimension, m1, m2, strassenOutput);
+  strassen(dimension, m21, m22, strassenOutput);
   printMatrix(dimension, strassenOutput);
   
 }
