@@ -155,5 +155,20 @@ main(int argc, char *argv[]) {
 
   fclose(fp);
 
+  c = 0;
+  // put real values into matrix
+  for (int a = 0; a < dimensionOld; a++) {
+    for (int b = 0; b < dimensionOld; b++) {
+      m1[a][b] = values[c];
+      c++;
+    }
+  }
+
+  // put padding values into matrix
+  for (int a = dimensionOld; a < dimension; a++) {
+    for (int b = dimensionOld; b < dimension; b++){
+      m1[a][b] = 0;
+    }
+  }
 }
 
