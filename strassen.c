@@ -147,7 +147,10 @@ int main(int argc, char *argv[]) {
   int dimension = atoi(argv[2]);
   int dimensionOld = dimension;
 
-  // dimension = paddedValue(dimension);
+  if (dimension > 2) {
+    dimension = paddedValue(dimension);
+  }
+  
 
   int numValues = 2 * dimensionOld * dimensionOld;
   int values[numValues];
