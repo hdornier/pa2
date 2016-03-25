@@ -115,7 +115,14 @@ void strassen(int n, int x[][d], int y[][n], int z[][n]) {
   }
 }
 
-
+void printMatrix(m, d) {
+  for(int a = 0; a < d; a++) {
+    for(int b = 0; b < d; b++) {
+      printf("%d ", m[i][j]);
+    }
+    printf("\n");
+  }
+}
 
 main(int argc, char *argv[]) {
   if (argc != 4) {
@@ -159,14 +166,30 @@ main(int argc, char *argv[]) {
     }
   }
 
-  // put padding values into matrix
-  for (int a = dimensionOld; a < dimension; a++) {
-    for (int b = dimensionOld; b < dimension; b++){
-      m1[a][b] = 0;
+  c = numValues / 2;
+  for (int a = 0; a < dimensionOld; a++) {
+    for (int b = 0; b < dimensionOld; b++) {
+      m1[a][b] = values[c];
+      c++;
     }
   }
 
+  // put padding values into matrices
+  for (int a = dimensionOld; a < dimension; a++) {
+    for (int b = dimensionOld; b < dimension; b++){
+      m1[a][b] = 0;
+      m2[a][b] = 0;
+    }
+  }
 
- 
+  printMatrix(m1);
+  printMatrix(m2);
 
+  int conventionalOutput[dimension][dimension];
+  conventional(dimension, m1, m2, conventionalOutput);
+  printMatrix(conventionalResult);
+
+  int strassenOutput[dimension][dimension];
+  strassen(dimension, m1, m2, strassenOutput);
+  printMatrix(strassenResult)
 }
