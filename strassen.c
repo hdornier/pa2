@@ -27,11 +27,17 @@ void conventional(int d, int x[][d], int y[][d], int z[][d]) {
 
 }
 
-int paddedValue(int n) {
+int paddedValue(int dimension) {
 
-  return 0;
+  int paddedDimension = 1;
 
+  while(paddedDimension < dimension) {
+    power = power * 2;
+  }
+
+  return paddedDimension;
 }
+
 
 void printMatrix(int d, int m[][d]) {
   for(int a = 0; a < d; a++) {
